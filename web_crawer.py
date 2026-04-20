@@ -57,12 +57,11 @@ def click_article(driver, length,wait):
             
             print(f"成功儲存判決書{i+1}內容")
             print("="*30)
-                
             driver.back()
             
             time.sleep(1)
             
-    dump_json("jud_data.json", jud_data)
+    dump_json(jud_data)
     
 def click_next_page(driver,wait):
     driver.switch_to.default_content()
@@ -73,14 +72,21 @@ def click_next_page(driver,wait):
     
     time.sleep(3)
     
-def dump_json(filename, data):
-    if os.path.exists(filename):
+def dump_json(data):
+    num=1
     
-        with open(filename, 'a',encoding='utf-8') as f:
-            json.dump(data,f, ensure_ascii=False, indent=4)
+    target_path = f'data/trainning_data_set/judgment_{num}.json'
+    
+    if os.path.exists(target_path):
+        with open(target_path, 'a', encoding='utf-8') as f:
+            json.dump(data, f, ensure_ascii=False, indent=4)
             
-            print(f"成功儲存本次資料到 {filename}")
-        
+    else:
+        with open(target_path, 'w', encoding='utf-8') as f:
+            json.dump(data, f, ensure_ascii=False, indent=4)
+            
+    num+=1
+    
 def main():
     driver = create_driver()
     wait = WebDriverWait(driver, 10)
