@@ -73,19 +73,20 @@ def click_next_page(driver,wait):
     time.sleep(3)
     
 def dump_json(data):
-    num=1
+    target_path = 'data/tarinning_data_set/'
     
-    target_path = f'data/trainning_data_set/judgment_{num}.json'
+    num =1
     
-    if os.path.exists(target_path):
-        with open(target_path, 'a', encoding='utf-8') as f:
-            json.dump(data, f, ensure_ascii=False, indent=4)
-            
-    else:
-        with open(target_path, 'w', encoding='utf-8') as f:
-            json.dump(data, f, ensure_ascii=False, indent=4)
-            
-    num+=1
+    while True:
+        target_path = f"data/tarinning_data_set/jud_data_{num}.json"
+        if not os.path.exists(target_path):
+            break
+        num+=1
+        
+    with open(target_path, 'w', encoding='utf-8') as f:
+        json.dump(data, f, ensure_ascii=False, indent=4)
+        
+    print(f"成功儲存本次結果至 {target_path}")
     
 def main():
     driver = create_driver()
